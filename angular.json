@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "preserveSymlinks": true,
             "outputPath": "dist/mi-tfm-front",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -60,10 +61,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "MiTFM-front:build:production"
+              "buildTarget": "MiTFM-front:build:production"
             },
             "development": {
-              "browserTarget": "MiTFM-front:build:development"
+              "buildTarget": "MiTFM-front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +72,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "MiTFM-front:build"
+            "buildTarget": "MiTFM-front:build"
           }
         },
         "test": {
@@ -94,5 +95,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "e94f913c-f173-42a9-b078-38e0f4cafb81"
   }
 }

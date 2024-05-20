@@ -1,0 +1,35 @@
+<section class="main section_dashboard">
+    <p-toast />
+    <form [formGroup]="newForm" (ngSubmit)="onSubmit()">
+        <div class="flex align-items-center justify-content-center">
+            <h2>Speech to Text, aplicación de demostración.</h2>
+        </div>
+        <div class="flex flex-wrap align-items-center justify-content-center">
+            <div class="flex flex-wrap align-items-center justify-content-center col-12 md:col-4 lg:col-4">
+                <p-dropdown 
+                    [options]="technologies" 
+                    optionLabel="name"
+                    placeholder="Selecciona una tecnología" 
+                    formControlName="selectedTech"
+                    class="mr-2"/>
+                
+                <p-fileUpload 
+                    mode="basic" 
+                    name="demo[]" 
+                    chooseIcon="pi pi-upload" 
+                    url="https://www.primefaces.org/cdn/api/upload.php" 
+                    accept="audio/*" maxFileSize="2000000" 
+                    (onUpload)="onBasicUploadAuto($event)" 
+                    [auto]="true" 
+                    chooseLabel="Cargar un archivo" /> 
+            </div>
+            <div class="flex flex-wrap card align-items-center justify-content-center col-12 md:col-8 lg:col-8"> 
+                <p>
+                    {{ transcriptionText ? transcriptionText : 'Suba un archivo de audio. Para más información, puede consultar en la documentación.' }} 
+                </p>
+            </div>  
+        </div>        
+
+        <button type="submit" class="procesar_button" [disabled]="!newForm.valid">Procesar</button>
+    </form>
+</section>
