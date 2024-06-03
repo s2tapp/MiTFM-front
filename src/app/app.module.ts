@@ -7,6 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { CoreModule } from './core/core.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { LegalModule } from './legal/legal.module';
+import { ContactModule } from './contact/contact.module';
+import { FeatureModule } from './feature/feature.module'; 
+import { DocumentationModule } from './documentation/documentation.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,11 @@ import { DashboardModule } from './dashboard/dashboard.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule,
-    DashboardModule
+    DashboardModule,
+    LegalModule,
+    ContactModule,
+    FeatureModule,
+    DocumentationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,16 +2,22 @@
     <p-toast />
     <form [formGroup]="newForm" (ngSubmit)="onSubmit()">
         <div class="flex align-items-center justify-content-center">
-            <h2>Speech to Text, aplicación de demostración.</h2>
+            <h2>TuVozATexto, aplicación de demostración.</h2>
         </div>
-        <div class="flex flex-wrap align-items-center justify-content-center">
-            <div class="flex flex-wrap align-items-center justify-content-center col-12 md:col-4 lg:col-4">
-                <p-dropdown 
-                    [options]="technologies" 
-                    optionLabel="name"
-                    placeholder="Selecciona una tecnología" 
-                    formControlName="selectedTech"
-                    class="mr-2"/>
+        <div class="flex flex-wrap align-items-center justify-content-center p-2">
+            <div class="flex flex-column align-items-center justify-content-center col-12 md:col-4 lg:col-4">
+
+                <div class="flex flex-wrap gap-3">
+                    <div *ngFor="let technology of technologies" class="field-checkbox">
+                        <p-radioButton
+                            [inputId]="technology.key"
+                            [value]="technology.name" 
+                            formControlName="selectedTech" />
+                        <label [for]="technology.key" class="ml-2">
+                            {{ technology.name }}
+                        </label>
+                    </div>
+                </div>
                 
                 <p-fileUpload 
                     mode="basic" 
@@ -22,14 +28,29 @@
                     (onUpload)="onBasicUploadAuto($event)" 
                     [auto]="true" 
                     chooseLabel="Cargar un archivo" /> 
+                <div class="flex flex-column align-items-center justify-content-center" *ngIf="uploadedFileName">
+                    <p>Nombre del archivo: {{ uploadedFileName }}</p>
+                    <p>Tamaño del archivo: {{ uploadedFileSize }} bytes</p>
+                    <audio *ngIf="audioURL" controls [src]="audioURL"></audio>
+                </div>
             </div>
-            <div class="flex flex-wrap card align-items-center justify-content-center col-12 md:col-8 lg:col-8"> 
-                <p>
-                    {{ transcriptionText ? transcriptionText : 'Suba un archivo de audio. Para más información, puede consultar en la documentación.' }} 
-                </p>
+            <div class="flex flex-wrap align-items-center justify-content-center col-12 md:col-8 lg:col-8"> 
+                <p-editor formControlName="transcriptionText"  [style]="{ height: '320px'}" /> 
             </div>  
         </div>        
 
-        <button type="submit" class="procesar_button" [disabled]="!newForm.valid">Procesar</button>
+        <button type="submit" class="procesar_button" [disabled]="newForm.invalid">Procesar</button>
     </form>
+
+    <div class="flex flex-column align-items-center justify-content-center card">
+        <p>TuVozATexto es una aplicación gratuita multilingüe de conversión de voz a texto cuyo objetivo es ayudarte a transcribir un audio a texto.</p>
+
+        <p>La tecnología de voz a texto es valiosa para personas que tienen dificultades al usar dispositivos de entrada convencionales. </p>
+            
+        <p>La tecnología de voz a texto también puede utilizarse para mejorar la accesibilidad de las personas con dificultades auditivas, ya que puede convertir el habla en texto.</p> 
+
+        <p>No requiere descarga, instalación ni registro. Basta con subir un archivo y esperar a obtener la transcripción.</p> 
+
+        <p>La tecnología de voz a texto se está convirtiendo rápidamente en una herramienta esencial para quienes buscan ahorrar tiempo y aumentar su productividad.</p>
+    </div>
 </section>

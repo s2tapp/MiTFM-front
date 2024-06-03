@@ -1,18 +1,19 @@
 import { HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
+import { CommonModule } from '@angular/common';
+
 import { MessageService } from 'primeng/api';
 import { PeticionService, TranscriptionResponse } from '../shared/peticion/peticion.service';
 
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { DropdownModule } from 'primeng/dropdown';
-import { CardModule } from 'primeng/card';
+import { EditorModule } from 'primeng/editor';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface UploadEvent {
   originalEvent: HttpEvent<any>;
@@ -20,6 +21,7 @@ interface UploadEvent {
 }
 
 interface Technology {
+  key: string,
   name: string;
 }
 
@@ -28,15 +30,17 @@ interface Technology {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, FileUploadModule, ToastModule, InputTextareaModule, DropdownModule, CardModule],
+  imports: [ReactiveFormsModule, FileUploadModule, ToastModule, EditorModule, RadioButtonModule, CommonModule, FormsModule],
   providers: [MessageService]
 })
 export class DashboardComponent implements OnInit {
   technologies: Technology[] | undefined;
 
-  transcriptionText!: string;
-
   newForm!: FormGroup;
+
+  uploadedFileName!: string;
+  uploadedFileSize!: number;
+  audioURL!: string;
 
   constructor(private messageService: MessageService,
     private peticionService: PeticionService,
@@ -44,18 +48,24 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.technologies = [{name: "whisper"}, {name: "wav2vec"}];
+    this.technologies = [{key: "tech1", name: "whisper"}, {key: "tech2", name: "wav2vec"}];
     this.newForm = this.fb.group({
       selectedFile: [null, Validators.required],
-      selectedTech: ['', Validators.required]
+      selectedTech: ['whisper', Validators.required],
+      transcriptionText: ['asdasdsdassa', null]
     });
   }
 
   onBasicUploadAuto(event: UploadEvent) {
+    const file = event.files[0];
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Se ha subido correctamente el archivo' });
     this.newForm.patchValue ({
-      selectedFile: event.files[0]
+      selectedFile: file
     });
+
+    this.uploadedFileName = file.name;
+    this.uploadedFileSize = file.size;
+    this.audioURL = URL.createObjectURL(file);
   }
 
   onSubmit(): void {
@@ -63,10 +73,12 @@ export class DashboardComponent implements OnInit {
       const formValues = this.newForm.value;
       const selectedFile = formValues.selectedFile;
       const technology = formValues.selectedTech;
-      this.peticionService.createTranscription(technology.name, selectedFile).subscribe(
+      this.peticionService.createTranscription(technology, selectedFile).subscribe(
         (response: TranscriptionResponse) => {
           console.log('Transcription created successfully', response);
-          this.transcriptionText = response.text;
+          this.newForm.patchValue ({
+            transcriptionText: response.text
+          });
         });
    } else {
     this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'la tecnología y el archivo se deben introducir' });

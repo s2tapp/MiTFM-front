@@ -1,0 +1,11 @@
+<section class="features-section">
+    <h2>Tecnologías</h2>
+    <div *ngFor="let tech of technologies" class="technology-item">
+      <h3>{{ tech.name }}</h3>
+      <p>{{ tech.description }}</p>
+      <h4>Lista de lenguajes soportados:</h4>
+      <p>{{ tech.supportedLanguages.join(', ') }}</p>
+      <h4>Formatos de audio soportados:</h4>
+      <p>{{ tech.supportedFormats.join(', ') }}</p>
+    </div>
+  </section>
