@@ -11,7 +11,6 @@ import { ToastModule } from 'primeng/toast';
 import { EditorModule } from 'primeng/editor';
 import { RadioButtonModule } from 'primeng/radiobutton';
 
-
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -48,11 +47,11 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.technologies = [{key: "tech1", name: "whisper"}, {key: "tech2", name: "wav2vec"}];
+    this.technologies = [{key: "tech1", name: "Whisper"}, {key: "tech2", name: "Wav2vec"}];
     this.newForm = this.fb.group({
       selectedFile: [null, Validators.required],
-      selectedTech: ['whisper', Validators.required],
-      transcriptionText: ['asdasdsdassa', null]
+      selectedTech: [this.technologies[0].name, Validators.required],
+      transcriptionText: ["Suba un archivo de audio y presiona procesar para obtener la transcripción.<br/>Para más información, puede consultar en la documentación.", null]
     });
   }
 
@@ -77,7 +76,7 @@ export class DashboardComponent implements OnInit {
         (response: TranscriptionResponse) => {
           console.log('Transcription created successfully', response);
           this.newForm.patchValue ({
-            transcriptionText: response.text
+            transcriptionText: response.text + "<br/><br/>Tiempo requerido: " + response.time +" segundos - Confianza: " +  (response.confidence * 100) +" %"
           });
         });
    } else {

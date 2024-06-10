@@ -8,7 +8,9 @@ import { Peticion } from './peticion.model';
 import { environment } from '../../../environments/environment';
 
 export interface TranscriptionResponse {
-  text: string;
+  text: string,
+  time: number,
+	confidence: number;
 }
 
 @Injectable()
