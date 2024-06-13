@@ -25,7 +25,8 @@
                     chooseIcon="pi pi-upload" 
                     url="https://www.primefaces.org/cdn/api/upload.php" 
                     accept="audio/*" maxFileSize="2000000" 
-                    (onUpload)="onBasicUploadAuto($event)" 
+                    (onUpload)="onBasicUploadAuto($event)"
+                    (onProgress)="onProgessUpload($event)"
                     [auto]="true" 
                     chooseLabel="Cargar un archivo" /> 
                 <div class="flex flex-column align-items-center justify-content-center" *ngIf="uploadedFileName">
@@ -33,13 +34,16 @@
                     <p>Tamaño del archivo: {{ uploadedFileSize }} bytes</p>
                     <audio *ngIf="audioURL" controls [src]="audioURL"></audio>
                 </div>
+
+                <p-progressSpinner *ngIf="uploading" styleClass="custom-spinner"></p-progressSpinner>
             </div>
             <div class="flex flex-wrap align-items-center justify-content-center col-12 md:col-8 lg:col-8"> 
                 <p-editor formControlName="transcriptionText"  [style]="{ height: '320px'}" /> 
             </div>  
         </div>        
 
-        <button type="submit" class="procesar_button" [disabled]="newForm.invalid">Procesar</button>
+        <button type="submit" class="procesar_button" [disabled]="newForm.invalid || processing">Procesar</button>
+        <p-progressBar *ngIf="processing" mode="indeterminate"></p-progressBar>
     </form>
 
     <div class="flex flex-column align-items-center justify-content-center card">

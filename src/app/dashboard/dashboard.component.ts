@@ -10,6 +10,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { EditorModule } from 'primeng/editor';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -29,7 +30,8 @@ interface Technology {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, FileUploadModule, ToastModule, EditorModule, RadioButtonModule, CommonModule, FormsModule],
+  imports: [ReactiveFormsModule, FileUploadModule, ToastModule, EditorModule, RadioButtonModule,
+    ProgressSpinnerModule, CommonModule, FormsModule],
   providers: [MessageService]
 })
 export class DashboardComponent implements OnInit {
@@ -37,9 +39,12 @@ export class DashboardComponent implements OnInit {
 
   newForm!: FormGroup;
 
+  uploading: boolean = false;
   uploadedFileName!: string;
   uploadedFileSize!: number;
   audioURL!: string;
+
+  processing: boolean = false;
 
   constructor(private messageService: MessageService,
     private peticionService: PeticionService,
@@ -55,32 +60,41 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  onProgessUpload(event: any) {    
+    this.uploading = true;
+  }
+
   onBasicUploadAuto(event: UploadEvent) {
     const file = event.files[0];
+    
+    this.uploadedFileName = file.name;
+    this.uploadedFileSize = file.size;
+    this.audioURL = URL.createObjectURL(file);    
+    
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Se ha subido correctamente el archivo' });
     this.newForm.patchValue ({
       selectedFile: file
-    });
-
-    this.uploadedFileName = file.name;
-    this.uploadedFileSize = file.size;
-    this.audioURL = URL.createObjectURL(file);
+    })
+      
+    this.uploading = false;
   }
 
   onSubmit(): void {
     if (this.newForm.valid) {
+      this.processing = true;
       const formValues = this.newForm.value;
       const selectedFile = formValues.selectedFile;
       const technology = formValues.selectedTech;
       this.peticionService.createTranscription(technology, selectedFile).subscribe(
-        (response: TranscriptionResponse) => {
-          console.log('Transcription created successfully', response);
-          this.newForm.patchValue ({
-            transcriptionText: response.text + "<br/><br/>Tiempo requerido: " + response.time +" segundos - Confianza: " +  (response.confidence * 100) +" %"
-          });
+      (response: TranscriptionResponse) => {
+        console.log('Transcription created successfully', response);
+        this.newForm.patchValue ({
+          transcriptionText: response.text + "<br/><br/>Tiempo requerido: " + response.time +" segundos - Confianza: " +  (response.confidence * 100) +" %"
         });
+        this.processing = false;
+      });
    } else {
-    this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'la tecnología y el archivo se deben introducir' });
+      this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'la tecnología y el archivo se deben introducir' });
    } 
   }
 }
