@@ -1,6 +1,6 @@
 # TuVozATexto (Aplicación Web)
 
-Este proyecto es una aplicación web desarrollada utilizando Angular. Proporciona una interfaz de usuario para convertir grabaciones de voz en texto utilizando varias tecnologías de transcripción (Whisper y Wav2vec).
+Este proyecto es una aplicación web desarrollada utilizando Angular. Proporciona una interfaz de usuario para convertir archivos de voz en texto utilizando varias tecnologías de transcripción (Whisper y Wav2vec).
 
 ## Instalación
 
@@ -36,7 +36,7 @@ Estas son las dependencias que se utilizan en el proyecto:
 
 ## Uso
 
-- Sube un archivo de audio.
+- Sube un archivo de audio. El sistema soporta archivos de hasta 2MB.
 - Selecciona una tecnología de transcripción (por ejemplo, Whisper o Wav2vec).
 - Haz clic en el botón "Procesar" para iniciar el proceso de transcripción.
 - Una vez completada la transcripción, el texto se mostrará en el editor de texto junto con el tiempo de procesamiento y la confianza de la transcripción.

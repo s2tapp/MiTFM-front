@@ -28,7 +28,8 @@
                     (onUpload)="onBasicUploadAuto($event)"
                     (onProgress)="onProgessUpload($event)"
                     [auto]="true" 
-                    chooseLabel="Cargar un archivo" /> 
+                    chooseLabel="Cargar un archivo" />
+                     
                 <div class="flex flex-column align-items-center justify-content-center" *ngIf="uploadedFileName">
                     <p>Nombre del archivo: {{ uploadedFileName }}</p>
                     <p>Tamaño del archivo: {{ uploadedFileSize }} bytes</p>

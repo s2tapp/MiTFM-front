@@ -1,4 +1,4 @@
-.twimp {
+.peticion {
     background-color: #fff;
     color: #666;
     position: relative;
@@ -8,12 +8,12 @@
     max-width: 768px;
 }
 
-.twimp_header {
+.peticion_header {
     width: 100%;
     height: 100px;
 }
 
-.twimp_header_img {
+.peticion_header_img {
     width: 60px;
     border-radius: 50%;
     position: absolute;
@@ -21,7 +21,7 @@
     left: 20px;
 }
 
-.twimp_header_name {
+.peticion_header_name {
     position: absolute;
     left: 100px;
     top: 30px;
@@ -30,19 +30,19 @@
     font-size: 120%;
 }
 
-.twimp_header_date {
+.peticion_header_date {
     position: absolute;
     left: 100px;
     top: 55px;
     font-size: 80%;
 }
 
-.twimp_content {
+.peticion_content {
     width: 90%;
     margin: 0 auto 2em;
 }
 
-.twimp_line {
+.peticion_line {
     width: 90%;
     margin: 0 auto;
     border: 0;
@@ -51,7 +51,7 @@
     margin-top: 0.5em;
 }
 
-.twimp_fav {
+.peticion_fav {
     width: 100%;
     box-sizing: border-box;
     text-align: center;
@@ -86,7 +86,7 @@
    ------------------------------------------------------------------------- */
 
 @media (min-width: 768px) {
-    .twimp {
+    .peticion {
         margin: 0 auto 1em auto;
     }
 }

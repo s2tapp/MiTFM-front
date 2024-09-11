@@ -28,7 +28,7 @@ export class PeticionService {
     return this.httpClient.get(this.url_peticiones).pipe(
       map((dbPeticionList: any) => {
         for (let i in dbPeticionList) {
-          let url_peticion =  environment.url +'/twimp/' + dbPeticionList[i].id;
+          let url_peticion =  environment.url +'/peticion/' + dbPeticionList[i].id;
           let peticion: Peticion = new Peticion(dbPeticionList[i].id, url_peticion, 
             dbPeticionList[i].estado, dbPeticionList[i].resultado, dbPeticionList[i].transcripcion, dbPeticionList[i].tiempoProceso,
             dbPeticionList[i]._fecha);

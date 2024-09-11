@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class ContactComponent {
   email: string = 'gino.uva.2023.2024@gmail.com';
-  responsible: string = 'ECA-SIMM';
+  responsable: string = 'ECA-SIMM';
 }
