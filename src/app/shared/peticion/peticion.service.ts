@@ -17,8 +17,8 @@ export interface TranscriptionResponse {
 export class PeticionService {
 
   // habria que poner la url de springboot
-  private url_peticiones: string = "http://localhost:8080/api/peticiones";
-  private url_transcripcion = 'http://localhost:8080/api/transcription';
+  private url_peticiones: string = "/api/peticiones";
+  private url_transcripcion = '/api/transcription';
 
   constructor(private httpClient: HttpClient) { }
 

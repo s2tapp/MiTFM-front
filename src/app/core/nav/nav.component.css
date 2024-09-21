@@ -11,14 +11,24 @@
     overflow: hidden;
     max-width: 1024px;
     margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se ajusten en varias filas */
+    justify-content: center; /* Centra el contenido en pantallas pequeñas */
 }
 
 .nav_list_item {
-    width: 25%;
+    width: 100%; /* En pantallas pequeñas, los ítems ocuparán toda la fila */
     box-sizing: border-box;
-    float: left;
     background-color: #fff;
     text-align: center;
+    padding: 0.5em 0;
+}
+
+@media (min-width: 768px) {
+    .nav_list_item {
+        width: 25%; /* En pantallas medianas o mayores, se dividirán en 4 columnas */
+        float: none; /* Elimina el float */
+    }
 }
 
 .nav_list_link {
